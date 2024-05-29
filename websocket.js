@@ -69,7 +69,7 @@ function initWebSocket(server) {
                         user.socket_id = socket.id
 
                         registerCheck(data)
-                        
+
                         connectedUsers.push(user)
                         io.emit('NEW_USER', connectedUsers)
                     }).catch(e => console.log(e))
@@ -88,6 +88,7 @@ function initWebSocket(server) {
 
                 // }
                 callback({ success: true, user })
+                io.emit('NEW_USER', connectedUsers)
             } catch (error) {
                 callback({ success: false, msg: error.message })
             }
