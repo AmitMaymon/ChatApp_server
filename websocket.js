@@ -27,7 +27,7 @@ function initWebSocket(server) {
             const user = UserModel.findOne({ username: data.username, password: data.password }).then(user => {
                 if (user) {
                     console.log('User logged in:', user.username);
-                    user = { username: user.username, user_id: user.user_id }
+                    user = { username: user.username, user_id: user.user_id, socket_id: socket.id }
                     data = { success: true, user: user }
                     user.socket_id = socket.id
                     connectedUsers.push(user)
@@ -80,7 +80,7 @@ function initWebSocket(server) {
             const token = socket.handshake.query.token
             try {
                 const decoded = jwt.verify(token, 'MONKEY')
-                const user = { username: decoded.username, user_id: decoded.user_id }
+                const user = { username: decoded.username, user_id: decoded.user_id, socket_id: socket.id }
                 if (!connectedUsers.find(u => u.user_id === user.user_id)) {
                     connectedUsers.push(user)
 
