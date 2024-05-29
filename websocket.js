@@ -81,10 +81,10 @@ function initWebSocket(server) {
             try {
                 const decoded = jwt.verify(token, 'MONKEY')
                 const user = { username: decoded.username, user_id: decoded.user_id, socket_id: socket.id }
-                if (!connectedUsers.find(u => u.user_id === user.user_id)) {
+                // if (!connectedUsers.find(u => u.user_id === user.user_id)) {
                     connectedUsers.push(user)
 
-                }
+                // }
                 callback({ success: true, user })
             } catch (error) {
                 callback({ success: false, msg: error.message })
