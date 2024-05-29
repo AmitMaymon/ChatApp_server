@@ -20,6 +20,7 @@ function initWebSocket(server) {
 
     io.on('connection', (socket) => {
         console.log('User connected:', socket.id);
+        console.log('Connected users:', connectedUsers);
         // connectedUsers.push({ username: socket.handshake.query.username, socket_id: socket.id })
 
 
@@ -30,13 +31,13 @@ function initWebSocket(server) {
                     user = { username: user.username, user_id: user.user_id, socket_id: socket.id }
                     data = { success: true, user: user }
                     user.socket_id = socket.id
-                    connectedUsers.push(user)
-                    io.emit('NEW_USER', connectedUsers)
 
                     const token = jwt.sign({ username: user.username, user_id: user.user_id }, 'MONKEY', { expiresIn: '1h' })
                     data.token = token
 
                     loginCheck(data)
+                    connectedUsers.push(user)
+                    io.emit('NEW_USER', connectedUsers)
 
                 } else {
                     data = { success: false }
@@ -66,10 +67,11 @@ function initWebSocket(server) {
                         user = { username: user.username, user_id: user.user_id, socket_id: socket.id }
                         data = { success: true, user: user }
                         user.socket_id = socket.id
-                        connectedUsers.push(user)
-                        io.emit('NEW_USER', connectedUsers)
 
                         registerCheck(data)
+                        
+                        connectedUsers.push(user)
+                        io.emit('NEW_USER', connectedUsers)
                     }).catch(e => console.log(e))
                 }
             })
@@ -82,7 +84,7 @@ function initWebSocket(server) {
                 const decoded = jwt.verify(token, 'MONKEY')
                 const user = { username: decoded.username, user_id: decoded.user_id, socket_id: socket.id }
                 // if (!connectedUsers.find(u => u.user_id === user.user_id)) {
-                    connectedUsers.push(user)
+                connectedUsers.push(user)
 
                 // }
                 callback({ success: true, user })
