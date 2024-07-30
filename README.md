@@ -10,8 +10,9 @@ with socket.io.
 
 let me know what you think :).
 
-there is also a live demo on:
-https://chatappclient.netlify.app
+Live demo - [Click Here](https://chatappclient.netlify.app)
+
+Client Repo - [Click Here](https://github.com/AmitMaymon/ChatApp_client)
 
 (if it doesnt respond after you try to register/login wait a few minutes and try again,
 because the server might need to boot back up due to inactivity)
